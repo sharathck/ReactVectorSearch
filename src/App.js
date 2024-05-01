@@ -26,7 +26,9 @@ const App = () => {
       {data.map((item) => (
         <div key={item.createdDateTime}>
           <h3 style={{ color: "brown" }}> {item.createdDateTime} ---- model: <span style={{ color: "blue", fontSize: "24px" }}>{item.model}</span></h3>
-          <h4 style={{ color: "green" }}>{item.question}</h4>
+          <div style={{ border: "1px dotted black", padding: "2px" }}>
+            <p style={{ color: "grey" }}>{item.question}</p>
+          </div>
           <ReactMarkdown>{item.answer}</ReactMarkdown>
         </div>
       ))}
