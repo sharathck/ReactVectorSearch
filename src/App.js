@@ -5,6 +5,8 @@ const limit = urlParams.get("limit") || 6;
 const App = () => {
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
 
   useEffect(() => {
     console.log(searchQuery);
@@ -12,30 +14,40 @@ const App = () => {
     if (q === "") {
       return;
     }
+    setIsLoading(true);
     
     fetch(`https://us-central1-reviewtext-ad5c6.cloudfunctions.net/function-12?limit=${limit}&query=${q}`)
-    .then((res) => {
+      .then((res) => {
         return res.json();
       })
       .then((data) => {
         try {
-       //   const parsedData = JSON.parse(data);
+          //   const parsedData = JSON.parse(data);
           setData(data);
+          setIsLoading(false);
         } catch (error) {
           console.log("Invalid JSON format:", error);
+          setIsLoading(false);
         }
       })
       .catch((err) => console.log(err));
   }, [searchQuery]);
 
-  const handleSearchChange = (event) => {    
-      setSearchQuery(event.target.value);
+  const handleSearchChange = (event) => {
+
+    setSearchQuery(event.target.value);
+
+
   };
 
 
   return (
     <div>
       <input style={{ width: "60%", boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)" }} type="text" onKeyDown={(event) => event.key === "Enter" && handleSearchChange(event)} placeholder="Search..." />
+      <div>
+      {isLoading && <p> Loading Data...</p>}
+      {/* Rest of your component */}
+      </div>
       {data.map((item) => (
         <div key={item.createdDateTime}>
           <h3 style={{ color: "brown" }}> model: <span style={{ color: "blue", fontSize: "24px" }}>{item.model}</span></h3>
