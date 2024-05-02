@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
-const urlParams = new URLSearchParams(window.location.search);
-const limit = urlParams.get("limit") || 6;
 const App = () => {
-  const [data, setData] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const rowCount = data.length;
+const [data, setData] = useState([]);
+const [searchQuery, setSearchQuery] = useState('');
+const [isLoading, setIsLoading] = useState(false);
+const rowCount = data.length;
+const [limit, setLimit] = useState('6');
 
 
   useEffect(() => {
@@ -32,19 +31,23 @@ const App = () => {
         }
       })
       .catch((err) => console.log(err));
-  }, [searchQuery]);
+  }, [searchQuery, limit]);
 
   const handleSearchChange = (event) => {
-
     setSearchQuery(event.target.value);
-
-
   };
+
+  const handleLimitChange = (event) => {
+    setLimit(event.target.value);
+  };
+
 
 
   return (
     <div>
-      <input style={{ width: "60%", boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)" }} type="text" onKeyDown={(event) => event.key === "Enter" && handleSearchChange(event)} placeholder="Search..." />
+      <input id="searchInput" style={{ fontSizex: "24px", height: "10%", width: "60%", boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)" }} type="text" onKeyDown={(event) => event.key === "Enter" && handleSearchChange(event)} placeholder="Search..." />
+      <label htmlFor="limitInput">    Rows Limit:</label>
+      <input id="limitInput" style={{width: "10%", boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)" }} type="text" onKeyDown={(event) => event.key === "Enter" && handleLimitChange(event)} placeholder="6"/>
       <div>
       {isLoading && <p> Loading Data...</p>}
       {/* Rest of your component */}
