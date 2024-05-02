@@ -45,17 +45,19 @@ const [limit, setLimit] = useState('6');
 
   return (
     <div>
-      <input id="searchInput" style={{ fontSizex: "24px", height: "10%", width: "60%", boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)" }} type="text" onKeyDown={(event) => event.key === "Enter" && handleSearchChange(event)} placeholder="Search..." />
+      <input id="searchInput" style={{ fontSize: "18px", height: "10%", width: "60%", boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)" }} type="text" onKeyDown={(event) => event.key === "Enter" && handleSearchChange(event)} placeholder="Search..." />
       <label htmlFor="limitInput">    Rows Limit:</label>
-      <input id="limitInput" style={{width: "10%", boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)" }} type="text" onKeyDown={(event) => event.key === "Enter" && handleLimitChange(event)} placeholder="6"/>
+      <input id="limitInput" style={{ width: "10%", boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)" }} type="text" onKeyDown={(event) => event.key === "Enter" && handleLimitChange(event)} placeholder="6" />
       <div>
-      {isLoading && <p> Loading Data...</p>}
-      {/* Rest of your component */}
+        {isLoading && <p> Loading Data...</p>}
+        {/* Rest of your component */}
       </div>
       <h5 style={{ color: "green" }}> Total Rows: {rowCount}</h5>
       {data.map((item) => (
         <div key={item.createdDateTime}>
-          <h3 style={{ color: "brown" }}> model: <span style={{ color: "blue", fontSize: "24px" }}>{item.model}</span></h3>
+          {item.Relatedness && (
+              <span style={{ color: "orange", fontSize: "12px" }}>Relatedness: {item.Relatedness}</span>
+          )}
           <div style={{ border: "1px dotted black", padding: "2px" }}>
             <p style={{ color: "grey" }}>{item.question}</p>
           </div>
